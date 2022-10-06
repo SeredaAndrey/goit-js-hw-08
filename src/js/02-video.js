@@ -1,21 +1,33 @@
 import Player from '@vimeo/player';
-var throttle = require('lodash.throttle');
-
-// const player = new Player('handstick', {
-//   width: 640,
-// });
-
-// player.on('play', function () {
-//   console.log('played the video!');
-// });
 
 const iframe = document.querySelector('iframe');
-const iframePlayer = new Vimeo.Player(iframe);
+const iframePlayer = new Player(iframe);
 
-// Select with jQuery
-// If multiple elements are selected, it will use the first element.
-const jqueryPlayer = new Vimeo.Player($('iframe'));
+iframePlayer.on('play', function () {
+  console.log('played the video!');
+});
 
-// Select with the `<iframe>`’s id
-// Assumes that there is an <iframe id="player1"> on the page.
-const idPlayer = new Vimeo.Player('player1');
+iframePlayer
+  .getCurrentTime()
+  .then(function (seconds) {
+    console.log(seconds);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+iframePlayer
+  .setCurrentTime(120)
+  .then(function (seconds) {})
+  .catch(function (error) {
+    switch (error.name) {
+      case 'RangeError':
+        console.log(
+          'Error! The time was less than 0 or greater than the video’s duration.'
+        );
+        break;
+      default:
+        console.log('Error! Some other error occurred.');
+        break;
+    }
+  });
