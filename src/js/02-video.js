@@ -1,4 +1,5 @@
 import Player from '@vimeo/player';
+var throttle = require('lodash.throttle');
 
 // const player = new Player('handstick', {
 //   width: 640,
