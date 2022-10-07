@@ -1,7 +1,10 @@
+import throttle from 'lodash.throttle';
+
 const formData = {
   email: '',
   message: '',
 };
+const STORAGE_KEY = 'feedback-form-state';
 
 const refs = {
   form: document.querySelector('.feedback-form'),
@@ -14,21 +17,29 @@ populateText();
 refs.form.addEventListener('submit', evt => {
   evt.preventDefault();
   evt.currentTarget.reset();
-  removeData('feedback-form-state');
+  removeData(STORAGE_KEY);
 });
 
-refs.email.addEventListener('input', evt => {
-  formData.email = evt.target.value;
-  saveData('feedback-form-state', formData);
-});
+refs.email.addEventListener(
+  'input',
+  throttle(evt => {
+    formData.email = evt.target.value;
+    saveData(STORAGE_KEY, formData);
+    console.log(formData.email);
+  }, 500)
+);
 
-refs.textarea.addEventListener('input', evt => {
-  formData.message = evt.target.value;
-  saveData('feedback-form-state', formData);
-});
+refs.textarea.addEventListener(
+  'input',
+  throttle(evt => {
+    formData.message = evt.target.value;
+    saveData(STORAGE_KEY, formData);
+    console.log(formData.message);
+  }, 500)
+);
 
 function populateText() {
-  const data = loadData('feedback-form-state');
+  const data = loadData(STORAGE_KEY);
   if (data) {
     console.log(data);
     refs.email.value = data.email;
