@@ -1,15 +1,11 @@
-// Add imports above this line
 import { galleryItems } from './gallery-items';
-// Change code below this line
 
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-console.log(galleryItems);
+// console.log(galleryItems);
 
-// ЧЕРЕЗ КЛАСС
-
-const divElementContainer = document.querySelector('.gallery'); // получение ссылки на контейнер куда будет добавлятся разметка
+const divElementContainer = document.querySelector('.gallery');
 
 class Gallery {
   constructor(galleryItems, divElementContainer) {
@@ -17,7 +13,7 @@ class Gallery {
     this.divElementContainer = divElementContainer;
   }
   foo(event) {
-    event.preventDefault(); // удаление перехода по умолчанию по ссылке
+    event.preventDefault();
   }
   createMarkup(galleryItems) {
     const markup = [];
@@ -31,13 +27,13 @@ class Gallery {
     return markup.join('');
   }
   addListener() {
-    divElementContainer.addEventListener('click', this.foo); // добавление слушателя событий на клик по картинке с запуском функции foo()
+    divElementContainer.addEventListener('click', this.foo);
   }
   init() {
     divElementContainer.insertAdjacentHTML(
       'beforeend',
       this.createMarkup(this.galleryItems)
-    ); // добавление разметки на страницу
+    );
     this.addListener();
     let lightbox = new SimpleLightbox('.gallery a', {
       captions: true, //true	bool	show captions if availabled or not
